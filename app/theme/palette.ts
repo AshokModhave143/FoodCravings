@@ -85,7 +85,8 @@ const error = {
 };
 
 export const palette = {
-  black: '#1d1d1d',
+  offBlack: '#1d1d1d',
+  black: '#000000',
   white: '#ffffff',
   offWhite: '#e6e6e6',
   orange: '#FBA928',

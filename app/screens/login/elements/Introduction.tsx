@@ -1,17 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
-import {color, hp, typography, wp} from '../../theme';
+import {color, hp, typography, wp} from '../../../theme';
 
-export interface WelcomeProps {
-  user?: string;
-}
-export const Welcome: React.FC<WelcomeProps> = _props => {
+export interface IntroductionProps {}
+
+export const Introduction: React.FC<IntroductionProps> = _props => {
   return (
     <View style={styles.introductionContainer}>
       <View style={styles.logoAnimationContainer}>
         <LottieView
-          source={require('../../../assets/food-delivery-process.json')}
+          source={require('../../../../assets/food-delivery-process.json')}
           style={styles.logoAnimation}
           autoPlay
           loop
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
     top: '-15%',
   },
   logoAnimationContainer: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

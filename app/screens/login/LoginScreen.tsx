@@ -1,16 +1,24 @@
 import React, {useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
-import {color, hp, wp} from '../../theme';
-import {Welcome} from './Welcome';
+import {Button, Text, TextInput} from 'react-native-paper';
+import {Screens} from '../../navigators/ScreenList';
+import {LoginScreenNavigationProp} from '../../navigators/UnAuthNavigator';
+import {color, wp} from '../../theme';
+import {Introduction} from './elements/Introduction';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5Pro';
 
-export const LoginUI: React.FC = () => {
+export interface LoginScreenProps {
+  navigation: LoginScreenNavigationProp;
+}
+
+export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLoginPress = () => {
     if (validateCredentials(username, password)) {
       Alert.alert('Login successful');
+      navigation.navigate(Screens.signup);
     } else {
       Alert.alert('Invalid credentials');
     }
@@ -22,32 +30,34 @@ export const LoginUI: React.FC = () => {
   return (
     <View style={styles.loginContainer}>
       <View style={styles.introduction}>
-        <Welcome user="ASHOK" />
+        <Introduction />
       </View>
       <View style={styles.detailSection}>
         <View style={styles.loginSection}>
           <TextInput
             label="Username"
             value={username}
-            dense
             mode="outlined"
-            textColor={color.palette.black}
-            activeOutlineColor={color.palette.black}
+            textColor={color.palette.offWhite}
+            placeholderTextColor={color.palette.offWhite}
+            activeOutlineColor={color.palette.orange}
             left={<TextInput.Icon icon="account" />}
             style={styles.input}
             onChangeText={setUsername}
+            outlineStyle={styles.inputOutline}
           />
           <TextInput
             label="Password"
             value={password}
-            dense
             mode="outlined"
-            textColor={color.palette.black}
-            activeOutlineColor={color.palette.black}
+            textColor={color.palette.offWhite}
+            placeholderTextColor={color.palette.offWhite}
+            activeOutlineColor={color.palette.orange}
             secureTextEntry
             left={<TextInput.Icon icon="lock" />}
             style={styles.input}
             onChangeText={setPassword}
+            outlineStyle={styles.inputOutline}
           />
           <Button
             mode="text"
@@ -63,6 +73,32 @@ export const LoginUI: React.FC = () => {
             Log in
           </Button>
         </View>
+        <Text style={styles.text}>OR</Text>
+        <View style={styles.socialIconContainer}>
+          <View>
+            <FontAwesomeIcon
+              name="facebook"
+              solid
+              color="#3b5998"
+              allowFontScaling
+              size={24}
+              style={styles.socialIcon}
+            />
+          </View>
+          <View>
+            <FontAwesomeIcon
+              name="google"
+              solid
+              allowFontScaling
+              size={24}
+              style={styles.socialIcon}
+            />
+          </View>
+        </View>
+        <Text style={styles.text}>Don't have an account?</Text>
+        <Button mode="text" textColor={color.primary} style={styles.signupBtn}>
+          Sign up
+        </Button>
       </View>
     </View>
   );
@@ -71,20 +107,19 @@ export const LoginUI: React.FC = () => {
 const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
+    backgroundColor: color.background,
   },
   introduction: {
     flex: 1,
   },
   detailSection: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: color.palette.lightGrey,
-    height: hp(720),
+    backgroundColor: color.palette.offBlack,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    paddingTop: -20,
     paddingHorizontal: 16,
   },
   loginSection: {
@@ -93,13 +128,30 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 8,
-    backgroundColor: color.palette.lighterGrey,
+    backgroundColor: color.background,
+    width: '100%',
   },
+  inputOutline: {borderRadius: 25},
   loginBtn: {
     marginTop: 20,
     backgroundColor: color.primary,
   },
   forgotPasswordLink: {alignItems: 'flex-end'},
+  text: {color: color.palette.offWhite},
+  signupBtn: {
+    marginTop: -10,
+  },
+  socialIconContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 16,
+    gap: 16,
+  },
+  socialIcon: {
+    backgroundColor: 'white',
+  },
 });
 
 const validateCredentials = (username: string, password: string) => {
