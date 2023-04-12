@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -10,12 +10,13 @@ import {
   NavigationContainerRef,
   ParamListBase,
 } from '@react-navigation/native';
+import {useReduxSelector} from '../store';
 
 export type RootParamList = {
   AppStack: undefined;
 };
 
-export type AppStackNavigationProp = NativeStackNavigationProp<
+export type RootNavigationProp = NativeStackNavigationProp<
   RootParamList,
   'AppStack'
 >;
@@ -23,8 +24,9 @@ export type AppStackNavigationProp = NativeStackNavigationProp<
 const Stack = createNativeStackNavigator<RootParamList>();
 
 const RootStack = () => {
-  const [isLoggedIn] = useState(false);
-  const component = isLoggedIn ? AuthNavigator : UnAuthNavigator;
+  const {isAuthenticated} = useReduxSelector(state => state.auth);
+
+  const component = isAuthenticated ? AuthNavigator : UnAuthNavigator;
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>

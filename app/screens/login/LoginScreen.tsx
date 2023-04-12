@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {Screens} from '../../navigators/ScreenList';
@@ -6,27 +6,42 @@ import {LoginScreenNavigationProp} from '../../navigators/UnAuthNavigator';
 import {color, wp} from '../../theme';
 import {Introduction} from './elements/Introduction';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5Pro';
+import {useReduxDispatch, useReduxSelector} from '../../store';
+import {login} from '../../store/auth/auth.slice';
 
 export interface LoginScreenProps {
   navigation: LoginScreenNavigationProp;
 }
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
+  const {isAuthenticated, error} = useReduxSelector(state => state.auth);
+  const dispatch = useReduxDispatch();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    if (!isAuthenticated && error) {
+      Alert.alert(error.message);
+    }
+  }, [isAuthenticated, error]);
+
   const handleLoginPress = () => {
-    if (validateCredentials(username, password)) {
-      Alert.alert('Login successful');
-      navigation.navigate(Screens.signup);
+    if (username && password) {
+      dispatch(login({username, password}));
     } else {
-      Alert.alert('Invalid credentials');
+      Alert.alert('Please enter credentials');
     }
   };
 
   const handleForgotPasswordPress = () => {
     Alert.alert('You forgot your password. Click "Ok" to recover it.');
   };
+
+  const handleSignupPress = () => {
+    navigation.navigate(Screens.signup);
+  };
+
   return (
     <View style={styles.loginContainer}>
       <View style={styles.introduction}>
@@ -96,7 +111,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
           </View>
         </View>
         <Text style={styles.text}>Don't have an account?</Text>
-        <Button mode="text" textColor={color.primary} style={styles.signupBtn}>
+        <Button
+          mode="text"
+          textColor={color.primary}
+          style={styles.signupBtn}
+          onPress={handleSignupPress}>
           Sign up
         </Button>
       </View>
@@ -153,14 +172,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
-
-const validateCredentials = (username: string, password: string) => {
-  if (
-    username.toString().toLowerCase() === 'admin' &&
-    password.toString() === 'admin'
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-};

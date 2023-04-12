@@ -6,9 +6,11 @@ import {
   initialWindowMetrics,
 } from 'react-native-safe-area-context';
 import {Provider as PaperProvider} from 'react-native-paper';
+import {Provider as ReduxProvider} from 'react-redux';
 import {enableScreens} from 'react-native-screens';
 import {ThemeNames, ThemeProvider} from './theme';
 import {RootNavigator} from './navigators/RootNavigators';
+import store from './store';
 
 // This puts screens in native ViewController or Activity
 enableScreens();
@@ -29,17 +31,19 @@ const App = () => {
 
   return (
     <ThemeProvider themeName={ThemeNames.DARK}>
-      <PaperProvider>
-        <SafeAreaProvider
-          initialMetrics={initialWindowMetrics}
-          style={backgroundStyle}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          />
-          <RootNavigator ref={navigationRef} />
-        </SafeAreaProvider>
-      </PaperProvider>
+      <ReduxProvider store={store}>
+        <PaperProvider>
+          <SafeAreaProvider
+            initialMetrics={initialWindowMetrics}
+            style={backgroundStyle}>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              backgroundColor={backgroundStyle.backgroundColor}
+            />
+            <RootNavigator ref={navigationRef} />
+          </SafeAreaProvider>
+        </PaperProvider>
+      </ReduxProvider>
     </ThemeProvider>
   );
 };
