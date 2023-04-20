@@ -1,23 +1,34 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Greetings} from '../../components/greetings';
+import {useReduxSelector} from '../../store';
+import {SearchBar} from '../../components/searchBar';
+import {color} from '../../theme';
+import {Categories} from '../../components/categories';
 
 export interface HomeScreenProps {
   navigation: any;
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = _props => {
+  const user = useReduxSelector(state => state.auth.user);
   return (
-    <View>
-      <Text style={styles.title}>Food Cravings</Text>
-      <Text style={styles.description}>
-        Your own food delivery junction. Order food from your nearby
-        restaurant's to fullfill your craving any time and earn discounts.
-      </Text>
+    <View style={styles.container}>
+      {/* Greetings */}
+      <Greetings user={user} />
+      {/* Search */}
+      <SearchBar />
+      {/* Categories filter */}
+      <Categories />
+      {/* New Dishes */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {},
-  description: {},
+  container: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: color.background,
+  },
 });

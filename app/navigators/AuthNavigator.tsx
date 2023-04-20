@@ -60,7 +60,7 @@ export function AuthNavigator() {
         name={Screens.home}
         component={HomeScreenContainer}
         options={{
-          tabBarLabel: 'Home',
+          headerShown: false,
           // eslint-disable-next-line react/no-unstable-nested-components, @typescript-eslint/no-shadow
           tabBarIcon: ({color, size}) => (
             <FontAwesome5Icon name="home" size={size} color={color} />
