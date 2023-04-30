@@ -8,4 +8,5 @@ export enum Screens {
   cart = 'cart',
   checkout = 'checkout',
   orderTracking = 'orderTracking',
+  chat = 'chat',
 }

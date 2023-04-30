@@ -5,9 +5,10 @@ import {useReduxSelector} from '../../store';
 import {SearchBar} from '../../components/searchBar';
 import {color} from '../../theme';
 import {Categories} from '../../components/categories';
+import {AuthNavigationProp} from '../../navigators/AuthNavigator';
 
 export interface HomeScreenProps {
-  navigation: any;
+  navigation: AuthNavigationProp;
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = _props => {

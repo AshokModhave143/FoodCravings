@@ -27,8 +27,11 @@ export const Categories: React.FC<CategoriesProps> = () => {
         </Button>
       </View>
       <View style={styles.filterContainer}>
-        {quickFilters.map(filter => (
-          <Chip icon={filter.icon} style={styles.chip}>
+        {quickFilters.map((filter, index) => (
+          <Chip
+            key={`${filter.name}-${index}`}
+            icon={filter.icon}
+            style={styles.chip}>
             {filter.name}
           </Chip>
         ))}

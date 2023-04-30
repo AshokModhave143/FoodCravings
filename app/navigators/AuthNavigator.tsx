@@ -9,6 +9,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {color} from '../theme';
 import {NotificationScreenContainer} from '../screens/notification/NotificationScreen.container';
 import {SearchScreenContainer} from '../screens/search/SearchScreen.container';
+import {ChatScreenContainer} from '../screens/chat/ChatScreen.container';
 
 export type AuthParamList = {
   home: undefined;
@@ -16,11 +17,12 @@ export type AuthParamList = {
   notification: undefined;
   cart: undefined;
   profile: undefined;
+  chat: undefined;
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<
   AuthParamList,
-  'home' | 'search' | 'notification' | 'cart' | 'profile'
+  'home' | 'search' | 'notification' | 'cart' | 'profile' | 'chat'
 >;
 
 // const Stack = createNativeStackNavigator<AuthParamList>();
@@ -102,6 +104,19 @@ export function AuthNavigator() {
             <FontAwesome5Icon name="shopping-cart" size={size} color={color} />
           ),
           title: 'Cart',
+        }}
+      />
+      <AuthTabNavigator.Screen
+        name={Screens.chat}
+        component={ChatScreenContainer}
+        options={{
+          headerShown: true,
+          tabBarLabel: 'Chat',
+          // eslint-disable-next-line react/no-unstable-nested-components, @typescript-eslint/no-shadow
+          tabBarIcon: ({color, size}) => (
+            <FontAwesome5Icon name="mobile" size={size} color={color} />
+          ),
+          title: 'Chat',
         }}
       />
       <AuthTabNavigator.Screen
