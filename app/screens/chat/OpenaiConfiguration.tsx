@@ -1,7 +1,7 @@
 import {Configuration, OpenAIApi, CreateCompletionResponse} from 'openai';
 
 export const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
 
 export const openAiInstance = new OpenAIApi(configuration);
