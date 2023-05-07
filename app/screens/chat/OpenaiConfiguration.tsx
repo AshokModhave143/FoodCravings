@@ -2,6 +2,7 @@ import {Configuration, OpenAIApi, CreateCompletionResponse} from 'openai';
 
 export const configuration = new Configuration({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  organization: 'org-Mv5YkPFVciRZXNd9Z5uaXvhQ',
 });
 
 export const openAiInstance = new OpenAIApi(configuration);
@@ -19,6 +20,7 @@ export const getResponse = async (inputTextPrompt: string) => {
     return completion.data;
   } catch (err) {
     console.log('Error in processing', err);
+    throw err;
   }
 };
 

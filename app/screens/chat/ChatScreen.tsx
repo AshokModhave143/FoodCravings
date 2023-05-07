@@ -44,8 +44,8 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({navigation}) => {
           generateMessageResponseObject(UserType.ai, response),
         ]);
       }
-    } catch (err) {
-      Alert.alert('Error in processing');
+    } catch (err: any) {
+      Alert.alert('Error in processing', err.message);
     }
   };
 
