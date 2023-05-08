@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Greetings} from '../../components/greetings';
 import {useReduxSelector} from '../../store';
 import {SearchBar} from '../../components/searchBar';
@@ -14,7 +14,7 @@ export interface HomeScreenProps {
 export const HomeScreen: React.FC<HomeScreenProps> = _props => {
   const user = useReduxSelector(state => state.auth.user);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Greetings */}
       <Greetings user={user} />
       {/* Search */}
@@ -22,7 +22,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = _props => {
       {/* Categories filter */}
       <Categories />
       {/* New Dishes */}
-    </View>
+    </ScrollView>
   );
 };
 
