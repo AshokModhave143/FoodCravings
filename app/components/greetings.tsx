@@ -10,11 +10,28 @@ export interface GreetingsProps {
 
 export const Greetings: React.FC<GreetingsProps> = ({user}) => {
   const {firstName, lastName} = user ?? {};
+
+  const getGreetingText = (): string => {
+    let greeting = '';
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour <= 11) {
+      greeting = 'Good Morning';
+    } else if (hour >= 12 && hour <= 16) {
+      greeting = 'Good Afternoon';
+    } else if (hour >= 17 && hour <= 20) {
+      greeting = 'Good Evening';
+    } else {
+      greeting = 'Good Night';
+    }
+
+    return greeting;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.greetingTextContainer}>
         <Text variant="bodyMedium" style={styles.greetingText}>
-          Good morning
+          {getGreetingText()}
         </Text>
         <Text
           variant="bodyLarge"
@@ -32,6 +49,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: 32,
     marginBottom: 16,
   },
