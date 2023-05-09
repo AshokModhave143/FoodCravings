@@ -12,8 +12,8 @@ Food delivery mobile app with basic features
 
 # App screenshots
 
-![image](./misc/screenshots/screenshot-11.png)
-![image](./misc/screenshots/screenshot-12.png)
-![image](./misc/screenshots/screenshot-13.png)
-![image](./misc/screenshots/screenshot-14.png)
-![image](./misc/screenshots/screenshot-15.png)
+<img src="./misc/screenshots/screenshot-11.png" height="500">
+<img src="./misc/screenshots/screenshot-12.png" height="500">
+<img src="./misc/screenshots/screenshot-13.png" height="500">
+<img src="./misc/screenshots/screenshot-14.png" height="500">
+<img src="./misc/screenshots/screenshot-15.png" height="500">
