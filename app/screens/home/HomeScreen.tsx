@@ -2,10 +2,11 @@ import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Greetings} from '../../components/greetings';
 import {useReduxSelector} from '../../store';
-import {SearchBar} from '../../components/searchBar';
+import {SearchBarViewOnly} from '../../components/searchBar';
 import {color} from '../../theme';
 import {Categories} from '../../components/categories';
 import {AuthNavigationProp} from '../../navigators/AuthNavigator';
+import {Screens} from '../../navigators/ScreenList';
 
 export interface HomeScreenProps {
   navigation: AuthNavigationProp;
@@ -18,7 +19,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = _props => {
       {/* Greetings */}
       <Greetings user={user} />
       {/* Search */}
-      <SearchBar />
+      <SearchBarViewOnly
+        onSearchInputClick={() => _props.navigation.navigate(Screens.search)}
+      />
       {/* Categories filter */}
       <Categories />
       {/* New Dishes */}

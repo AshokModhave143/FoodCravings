@@ -1,4 +1,7 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import React from 'react';
 import {HomeScreenContainer} from '../screens/home/HomeScreen.container';
 import {Screens} from './ScreenList';
@@ -29,17 +32,39 @@ export type AuthNavigationProp = NativeStackNavigationProp<
 
 const AuthTabNavigator = createBottomTabNavigator();
 
+const HomeStack = createNativeStackNavigator();
+
+const HomeStackScreen = () => {
+  return (
+    <HomeStack.Navigator
+      initialRouteName={Screens.home}
+      screenOptions={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: color.background,
+        },
+        headerTitleStyle: {
+          color: color.palette.white,
+        },
+        headerBackTitleVisible: false,
+      }}>
+      <HomeStack.Screen
+        name={Screens.home}
+        component={HomeScreenContainer}
+        options={{headerShown: false}}
+      />
+      <HomeStack.Screen
+        name={Screens.search}
+        component={SearchScreenContainer}
+        options={{
+          title: 'Search',
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
+
 export function AuthNavigator() {
-  // return (
-  //   <Stack.Navigator
-  //     initialRouteName={Screens.home}
-  //     screenOptions={{
-  //       headerShown: true,
-  //       headerTitle: 'Home',
-  //     }}>
-  //     <Stack.Screen name={Screens.home} component={HomeScreenContainer} />
-  //   </Stack.Navigator>
-  // );
   return (
     <AuthTabNavigator.Navigator
       initialRouteName={Screens.home}
@@ -60,26 +85,13 @@ export function AuthNavigator() {
       }}>
       <AuthTabNavigator.Screen
         name={Screens.home}
-        component={HomeScreenContainer}
+        component={HomeStackScreen}
         options={{
           headerShown: false,
           // eslint-disable-next-line react/no-unstable-nested-components, @typescript-eslint/no-shadow
           tabBarIcon: ({color, size}) => (
             <FontAwesome5Icon name="home" size={size} color={color} />
           ),
-          title: 'Home',
-        }}
-      />
-      <AuthTabNavigator.Screen
-        name={Screens.search}
-        component={SearchScreenContainer}
-        options={{
-          tabBarLabel: 'Search',
-          // eslint-disable-next-line react/no-unstable-nested-components, @typescript-eslint/no-shadow
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome5Icon name="search" size={size} color={color} />
-          ),
-          title: 'Search',
         }}
       />
       <AuthTabNavigator.Screen

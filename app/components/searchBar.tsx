@@ -3,18 +3,46 @@ import {Searchbar} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {color} from '../theme';
 
-export const SearchBar: React.FC = () => {
-  const [search, setSearch] = useState('');
+export interface SearchBarProps {
+  onSearchInputClick?: () => void;
+  onTextChange?: (text: string) => void;
+}
+export const SearchBarViewOnly: React.FC<SearchBarProps> = ({
+  onSearchInputClick,
+}) => {
   return (
     <View style={styles.container}>
       <Searchbar
         placeholder="Search"
+        value=""
+        style={styles.searchbar}
+        inputStyle={styles.input}
+        textAlign="left"
         textAlignVertical="center"
-        iconColor={color.palette.lightGrey}
+        onPressOut={onSearchInputClick}
+      />
+    </View>
+  );
+};
+
+export const SearchBarInput: React.FC<SearchBarProps> = ({onTextChange}) => {
+  const [search, setSearch] = useState('');
+
+  const handleOnChange = (text: string) => {
+    setSearch(text);
+    onTextChange && onTextChange(text);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Searchbar
+        placeholder="Search"
         value={search}
         style={styles.searchbar}
         inputStyle={styles.input}
-        onChangeText={(text: string) => setSearch(text)}
+        textAlign="left"
+        textAlignVertical="center"
+        onChangeText={handleOnChange}
       />
     </View>
   );
@@ -26,12 +54,10 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     backgroundColor: color.palette.offBlack,
-    paddingHorizontal: 16,
-    height: 50,
+    height: 48,
   },
   input: {
     color: color.palette.white,
-    textAlignVertical: 'center',
-    height: 40,
+    paddingBottom: 6,
   },
 });
