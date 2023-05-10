@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Searchbar} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {color} from '../theme';
 
 export interface SearchBarProps {
+  value: string;
   onSearchInputClick?: () => void;
   onTextChange?: (text: string) => void;
 }
@@ -25,11 +26,11 @@ export const SearchBarViewOnly: React.FC<SearchBarProps> = ({
   );
 };
 
-export const SearchBarInput: React.FC<SearchBarProps> = ({onTextChange}) => {
-  const [search, setSearch] = useState('');
-
+export const SearchBarInput: React.FC<SearchBarProps> = ({
+  onTextChange,
+  value,
+}) => {
   const handleOnChange = (text: string) => {
-    setSearch(text);
     onTextChange && onTextChange(text);
   };
 
@@ -37,7 +38,7 @@ export const SearchBarInput: React.FC<SearchBarProps> = ({onTextChange}) => {
     <View style={styles.container}>
       <Searchbar
         placeholder="Search"
-        value={search}
+        value={value}
         style={styles.searchbar}
         inputStyle={styles.input}
         textAlign="left"

@@ -2,42 +2,20 @@ import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, List, Menu, Provider, Text} from 'react-native-paper';
 import {color} from '../theme';
+import {FoodItem} from '../screens/search/data';
 
-export const SearchList: React.FC = () => {
-  const foodItems = [
-    {
-      name: 'Pizza',
-      description: 'Cheese garlic pizza with tomato toppings',
-      price: 30,
-      starRatings: 4,
-      reviewCount: 107,
-      imageUrl: require('../../assets/dish-1.png'),
-    },
-    {
-      name: 'Pizza',
-      description: 'Cheese garlic pizza with tomato toppings',
-      price: 30,
-      starRatings: 4,
-      reviewCount: 107,
-      imageUrl: require('../../assets/dish-2.png'),
-    },
-    {
-      name: 'Pizza',
-      description: 'Cheese garlic pizza with tomato toppings',
-      price: 30,
-      starRatings: 4,
-      reviewCount: 107,
-      imageUrl: require('../../assets/dish-3.png'),
-    },
-    {
-      name: 'Pizza',
-      description: 'Cheese garlic pizza with tomato toppings',
-      price: 30,
-      starRatings: 4,
-      reviewCount: 107,
-      imageUrl: require('../../assets/dish-4.png'),
-    },
-  ];
+export interface SearchListProps {
+  foodItems: FoodItem[];
+  filterText: string;
+}
+export const SearchList: React.FC<SearchListProps> = ({
+  filterText,
+  foodItems,
+}) => {
+  const filteredFoodItems = foodItems.filter(
+    item =>
+      item.name.includes(filterText) || item.description.includes(filterText),
+  );
 
   return (
     <List.Section style={styles.searchListContainer}>
@@ -50,7 +28,7 @@ export const SearchList: React.FC = () => {
         </View>
       </List.Subheader>
       <ScrollView contentContainerStyle={styles.listContainer}>
-        {foodItems.map((item, index) => (
+        {filteredFoodItems.map((item, index) => (
           <List.Item
             key={`${item.name}-${index}`}
             title={item.name}
