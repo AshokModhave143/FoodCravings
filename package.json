@@ -9,6 +9,7 @@
     "start": "react-native start",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'",
     "test": "jest",
+    "adb:switch": "adb reverse tcp:8080 tcp:8080 && adb reverse tcp:8081 tcp:8081",
     "clean:project": "rm -rf yarn.lock package-lock.json node_modules ios/Pods ios/Podfile.lock android/app/build && npm install && cd ios && pod update && cd .. && npm run start -- --reset-cache"
   },
   "dependencies": {
